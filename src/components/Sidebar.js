@@ -7,16 +7,25 @@ class Sidebar extends React.Component {
     super(props);
     this.state = {
       categories: [],
+      selected : null
     };
   }
+
+  changeCategory(data) {
+    if (data.id === this.state.selected) {
+      this.setState({
+        selected : null
+      })
+    }else{
+      this.setState({
+        selected : data.id
+      })
+    }
+  }
+
   async componentDidMount() {
     await this.defineCategory();
   }
-
-  changeCategory(category){
-    console.log(category)
-  }
-
   async defineCategory() {
     let data = await categoriesServices.get();
     this.setState({
@@ -25,8 +34,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const { categories } = this.state;
-    const { changeCategory } = this.props
+    const { categories,selected } = this.state;
     return (
       <div class="m-4 fixed">
         <div class="text-white font-black">
@@ -38,10 +46,16 @@ class Sidebar extends React.Component {
         <div class="pt-12 text-white text-xs font-black">
           Explore <i class="bx bxs-cart-add"></i>
         </div>
+
         <ul class="list-none font-medium mx-4">
           {categories &&
             categories.map((data) => (
-              <CategoryCompnent key={data.id} category={data} changeCategory={changeCategory} />
+              <CategoryCompnent
+                key={data.id}
+                category={data}
+                selectedCategory={selected}
+                changeCategory={() => this.changeCategory(data)}
+              />
             ))}
         </ul>
 
@@ -59,9 +73,8 @@ class Sidebar extends React.Component {
 
         <div class="fixed  bottom-10 text-white text-xs font-black">
           <p class="w-full">
-            UserCoeg{" "}
+            UserCoeg
             <span class="float-right">
-              {" "}
               <i class="bx bx-user-circle "></i>
             </span>
           </p>
