@@ -1,20 +1,29 @@
-import { Cart, Sidebar, Content } from "./components";
 import React, { Component } from "react";
-
+import { Home, Sent } from "./pages/";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  BrowserRouter,
+} from "react-router-dom";
 export default class App extends Component {
   render() {
     return (
-      <div class="grid grid-cols-12 h-screen ">
-        <div class="col-span-2 bg-purple-600">
-          <Sidebar />
-        </div>
-        <div class="col-span-9 bg-gray-50">
-          <Content />
-        </div>
-        <div class="col-span-1 bg-gray-50">
-          <Cart />
-        </div>
-      </div>
+      <BrowserRouter>
+        <main>
+          <Switch>
+            <Route exact path="/">
+              <Home/>
+            </Route>
+            <Route path="/aw">
+              <Sent />
+            </Route>
+            <Route path="/aw/yes">
+              <Home />
+            </Route>
+          </Switch>
+        </main>
+      </BrowserRouter>
     );
   }
 }
