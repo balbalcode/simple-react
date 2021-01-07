@@ -3,7 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import 'boxicons'
 import App from './App';
+import {createStore, applyMiddleware} from "redux"
+import { Provider } from "react-redux";
 import reportWebVitals from './reportWebVitals';
+import thunk from "thunk";
+import reducer from "./reducer"
+
+const store = createStore(reducer, applyMiddleware(thunk))
+
 
 ReactDOM.render(
   <React.StrictMode>
